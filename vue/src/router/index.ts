@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import { DefaultLayout, AdminLayout } from "../Layouts";
 
-import { Start, Dashboard, Login, Register } from "../views";
+import { Start, Dashboard, Login, Register, Overview, Clients } from "../views";
 
 const routes = [
     {
@@ -37,7 +37,7 @@ const routes = [
                 path: "/dashboard/",
                 component: Dashboard,
                 name: "Dashboard",
-                // redirect: "/dashboard/overview",
+                redirect: "/dashboard/overview",
                 // beforeEnter: (to, from, next) => {
                 //     axiosAuthenticator
                 //         .get("/api/authenticated")
@@ -49,42 +49,18 @@ const routes = [
                 //         });
                 // },
 
-                // children:
-                // [
-                //     {
-                //         path: "/dashboard/overview",
-                //         component: Overview,
-                //         name: "Overview",
-                //     },
-                //     {
-                //         path: "/dashboard/emailing",
-                //         component: Emailing,
-                //         name: "Emailing",
-                //         redirect: "/dashboard/emailing/pricing",
-                //         children: [
-                //             {
-                //                 path: "/dashboard/emailing/pricing",
-                //                 component: EmailPricing,
-                //                 name: "EmailPricing",
-                //             },
-                //             {
-                //                 path: "/dashboard/emailing/response",
-                //                 component: EmailResponse,
-                //                 name: "EmailResponse",
-                //             },
-                //         ],
-                //     },
-                //     {
-                //         path: "/dashboard/analitics",
-                //         component: Analitics,
-                //         name: "Analitics",
-                //     },
-                //     {
-                //         path: "/dashboard/externallinks",
-                //         component: ExternalLinks,
-                //         name: "ExternalLinks",
-                //     },
-                // ],
+                children: [
+                    {
+                        path: "/dashboard/overview",
+                        component: Overview,
+                        name: "Overview",
+                    },
+                    {
+                        path: "/dashboard/Clients",
+                        component: Clients,
+                        name: "Clients",
+                    },
+                ],
             },
         ],
     },
