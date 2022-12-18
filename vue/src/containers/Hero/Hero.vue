@@ -1,14 +1,21 @@
 <template>
-    <section class="lg:container mx-auto">
+    <section class="container mx-auto">
         <div class="flex flex-col justify-center h-screen">
             <div>
                 <h1 class="font-bold">{{ title }}</h1>
-                <h2 class="mb-6">{{ subtitle }}</h2>
-                <Button>test</Button>
+
+                <div class="md:max-w-[60%]">
+                    <h2 class="mb-14">{{ subtitle }}</h2>
+                </div>
+
+                <router-link to="/login">
+                    <Button>{{ buttonText }}</Button>
+                </router-link>
             </div>
         </div>
     </section>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 
@@ -19,14 +26,14 @@ export default defineComponent({
     },
     data() {
         return {
-            title: 'Joker CRM',
-            imageUrl: 'https://example.com/image.jpg',
-            subtitle: 'My Subtitle',
-            buttonText: 'Click me'
+            title: '"Joker" CRM',
+            subtitle: 'Your verified working CRM system for your exact needs. Register now and join us in our journey!',
+            buttonText: 'Login'
         }
     },
 })
 </script>
+
 <style lang="scss">
 
 </style>
