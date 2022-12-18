@@ -1,6 +1,10 @@
 <template>
     <Navbar />
-    <router-view></router-view>
+    <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+            <component :is="Component" />
+        </transition>
+    </router-view>
 </template>
 
 <script lang="ts">
@@ -15,6 +19,14 @@ export default defineComponent({
 })
 </script>
 
-<style lang="">
-    
+<style lang="scss">
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.250s ease-out;
+}
 </style>
