@@ -1,6 +1,7 @@
 <template>
     <section class="container mx-auto">
         <div class="flex flex-col justify-center h-screen">
+            <img class="opacity-[35%] absolute z-[-99] min-w-[150vw]" src="../../assets/logo.svg" alt="" />
             <div>
                 <h1 class="font-bold">{{ title }}</h1>
 
