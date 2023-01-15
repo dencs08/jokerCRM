@@ -1,116 +1,144 @@
 <template>
-    <div class="min-h-full">
-        <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 items-center justify-between">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <router-link to="/start">
-                                <img class="h-10 w-10" src="../../../assets/logo.svg" alt="Your Company" />
-                            </router-link>
-                        </div>
-                        <div class="hidden md:block">
-                            <div class="ml-10 flex items-baseline space-x-4">
-                                <router-link v-for="item in navigation" :key="item.name" :to="item.href"
-                                    :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium']"
-                                    :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hidden md:block">
-                        <div class="ml-4 flex items-center md:ml-6">
-                            <button type="button"
-                                class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                <span class="sr-only">View notifications</span>
-                                <BellIcon class="h-6 w-6" aria-hidden="true" />
-                            </button>
+    <div class="flex h-screen">
+        <TransitionRoot as="template" :show="sidebarOpen">
+            <Dialog as="div" class="relative z-40 lg:hidden" @close="sidebarOpen = false">
+                <TransitionChild as="template" enter="transition-opacity ease-linear duration-300"
+                    enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300"
+                    leave-from="opacity-100" leave-to="opacity-0">
+                    <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+                </TransitionChild>
 
-                            <!-- Profile dropdown -->
-                            <Menu as="div" class="relative ml-3">
-                                <div>
-                                    <MenuButton
-                                        class="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                                        <span class="sr-only">Open user menu</span>
-                                        <img class="h-8 w-8 rounded-full" :src="user.imageUrl" alt="" />
-                                    </MenuButton>
+                <div class="fixed inset-0 z-40 flex">
+                    <TransitionChild as="template" enter="transition ease-in-out duration-300 transform"
+                        enter-from="-translate-x-full" enter-to="translate-x-0"
+                        leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0"
+                        leave-to="-translate-x-full">
+                        <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-white focus:outline-none">
+                            <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0"
+                                enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100"
+                                leave-to="opacity-0">
+                                <div class="absolute top-0 right-0 -mr-12 pt-2">
+                                    <button type="button"
+                                        class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                        @click="sidebarOpen = false">
+                                        <span class="sr-only">Close sidebar</span>
+                                        <XMarkIcon class="h-6 w-6 text-white" aria-hidden="true" />
+                                    </button>
                                 </div>
-                                <transition enter-active-class="transition ease-out duration-100"
-                                    enter-from-class="transform opacity-0 scale-95"
-                                    enter-to-class="transform opacity-100 scale-100"
-                                    leave-active-class="transition ease-in duration-75"
-                                    leave-from-class="transform opacity-100 scale-100"
-                                    leave-to-class="transform opacity-0 scale-95">
-                                    <MenuItems
-                                        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                        <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                                        <a :href="item.href"
-                                            :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">{{
-                                                    item.name
-                                            }}</a>
-                                        </MenuItem>
-                                    </MenuItems>
-                                </transition>
-                            </Menu>
-                        </div>
+                            </TransitionChild>
+                            <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
+                                <div class="flex flex-shrink-0 items-center px-4">
+                                    <img class="h-8 w-auto"
+                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                        alt="Your Company" />
+                                </div>
+                                <nav aria-label="Sidebar" class="mt-5">
+                                    <div class="space-y-1 px-2">
+                                        <router-link v-for="item in navigation" :key="item.name" :to="item.href"
+                                            :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
+                                            <component :is="item.icon"
+                                                :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-4 h-6 w-6']"
+                                                aria-hidden="true" />
+                                            {{ item.name }}
+                                        </router-link>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
+                                <a href="#" class="group block flex-shrink-0">
+                                    <div class="flex items-center">
+                                        <div>
+                                            <img class="inline-block h-10 w-10 rounded-full"
+                                                src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=256&h=256&q=80"
+                                                alt="" />
+                                        </div>
+                                        <div class="ml-3">
+                                            <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">
+                                                Whitney Francis</p>
+                                            <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">View
+                                                profile</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </DialogPanel>
+                    </TransitionChild>
+                    <div class="w-14 flex-shrink-0" aria-hidden="true">
+                        <!-- Force sidebar to shrink to fit close icon -->
                     </div>
-                    <div class="-mr-2 flex md:hidden">
-                        <!-- Mobile menu button -->
-                        <DisclosureButton
-                            class="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                            <span class="sr-only">Open main menu</span>
-                            <Bars3Icon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
-                            <XMarkIcon v-else class="block h-6 w-6" aria-hidden="true" />
-                        </DisclosureButton>
+                </div>
+            </Dialog>
+        </TransitionRoot>
+
+        <!-- Static sidebar for desktop -->
+        <div class="hidden lg:flex lg:flex-shrink-0">
+            <div class="flex w-38 flex-col">
+                <!-- Sidebar component, swap this element with another sidebar if you like -->
+                <div class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-gray-100">
+                    <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
+                        <div class="flex flex-shrink-0 items-center px-4">
+                            <img class="h-8 w-auto" src="../../../assets/logo.svg" alt="Your Company" />
+                        </div>
+                        <nav class="mt-5 flex-1" aria-label="Sidebar">
+                            <div class="space-y-1 px-2">
+                                <router-link v-for="item in navigation" :key="item.name" :to="item.href"
+                                    :class="[item.current ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                                    <Icon :icon="item.icon" class="w-4 h-4 mr-2" />
+                                    {{ item.name }}
+                                </router-link>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="flex flex-shrink-0 border-t border-gray-200 p-4">
+                        <a href="#" class="group block w-full flex-shrink-0">
+                            <div class="flex items-center">
+                                <div>
+                                    <img class="inline-block h-9 w-9 rounded-full"
+                                        src="https://source.unsplash.com/featured/300x201" alt="" />
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{ user.name
+                                    }}</p>
+                                    <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <DisclosurePanel class="md:hidden">
-                <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-                    <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href"
-                        :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block px-3 py-2 rounded-md text-base font-medium']"
-                        :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
-                </div>
-                <div class="border-t border-gray-700 pt-4 pb-3">
-                    <div class="flex items-center px-5">
-                        <div class="flex-shrink-0">
-                            <img class="h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
-                        </div>
-                        <div class="ml-3">
-                            <div class="text-base font-medium leading-none text-white">{{ user.name }}</div>
-                            <div class="text-sm font-medium leading-none text-gray-400">{{ user.email }}</div>
-                        </div>
+        </div>
+        <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
+            <div class="lg:hidden">
+                <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-1.5">
+                    <div>
+                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                            alt="Your Company" />
+                    </div>
+                    <div>
                         <button type="button"
-                            class="ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                            <span class="sr-only">View notifications</span>
-                            <BellIcon class="h-6 w-6" aria-hidden="true" />
+                            class="-mr-3 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
+                            @click="sidebarOpen = true">
+                            <span class="sr-only">Open sidebar</span>
+                            <Bars3Icon class="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
-                    <div class="mt-3 space-y-1 px-2">
-                        <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href"
-                            class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">
-                            {{ item.name }}</DisclosureButton>
-                    </div>
                 </div>
-            </DisclosurePanel>
-        </Disclosure>
-
-        <header class="bg-white shadow">
-            <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
             </div>
-        </header>
-        <main>
-            <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                <!-- Replace with your content -->
-                <router-view v-slot="{ Component }">
-                    <transition name="quickFade" mode="out-in">
-                        <component :is="Component" />
-                    </transition>
-                </router-view>
-                <!-- /End replace -->
+            <div class="relative z-0 flex flex-1 overflow-hidden">
+                <main class="w-full">
+                    <div class="mx-auto py-6 sm:px-6 lg:px-8">
+                        <!-- Replace with your content -->
+                        <router-view v-slot="{ Component }">
+                            <transition name="quickFade" mode="out-in">
+                                <component :is="Component" />
+                            </transition>
+                        </router-view>
+                        <!-- /End replace -->
+                    </div>
+                </main>
             </div>
-        </main>
+        </div>
     </div>
 </template>
 <script lang="ts">
@@ -118,7 +146,7 @@ import { defineComponent } from 'vue';
 
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-
+import { Icon } from '@iconify/vue';
 export default defineComponent({
     components: {
         Disclosure,
@@ -130,16 +158,18 @@ export default defineComponent({
         MenuItems,
         Bars3Icon,
         BellIcon,
-        XMarkIcon
+        XMarkIcon,
+        Icon
     },
     data() {
         return {
             navigation: [
-                { name: 'Dashboard', href: '/dashboard/overview', current: false },
-                { name: 'Clients', href: '/dashboard/clients', current: false },
-                // { name: 'Projects', href: '#', current: false },
-                // { name: 'Calendar', href: '#', current: false },
-                // { name: 'Reports', href: '#', current: false },
+                { name: 'Dashboard', href: '/dashboard/overview', current: false, icon: 'mdi:home' },
+                { name: 'Clients', href: '/dashboard/clients', current: false, icon: 'mdi:account-group' },
+                { name: 'Contracts', href: '#', current: false, icon: 'mdi:account-credit-card' },
+                // { name: 'Calendar', href: '#', current: false, icon: 'mdi:calendar' },
+                // { name: 'Reports', href: '#', current: false, icon: 'mdi:message-alert' },
+                { name: 'Emails', href: '#', current: false, icon: 'mdi:email' },
             ],
             user: {
                 name: 'Daniel Buzon',
@@ -151,7 +181,8 @@ export default defineComponent({
                 { name: 'Your Profile', href: '#' },
                 { name: 'Settings', href: '#' },
                 { name: 'Sign out', href: '#' },
-            ]
+            ],
+            sidebarOpen: true,
         }
     }
 })
