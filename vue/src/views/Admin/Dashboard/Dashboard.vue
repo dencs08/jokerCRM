@@ -28,9 +28,10 @@
                             </TransitionChild>
                             <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
                                 <div class="flex flex-shrink-0 items-center px-4">
-                                    <img class="h-8 w-auto"
+                                    <!-- <img class="h-8 w-auto"
                                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                        alt="Your Company" />
+                                        alt="Your Company" /> -->
+                                    JokerCRM
                                 </div>
                                 <nav aria-label="Sidebar" class="mt-5">
                                     <div class="space-y-1 px-2">
@@ -54,7 +55,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                                                Whitney Francis</p>
+                                                Daniel Buzon</p>
                                             <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">View
                                                 profile</p>
                                         </div>
@@ -77,11 +78,21 @@
                 <div class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-gray-100">
                     <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
                         <div class="flex flex-shrink-0 items-center px-4">
-                            <img class="h-8 w-auto" src="../../../assets/logo.svg" alt="Your Company" />
+                            <!-- <img class="h-8 w-auto" src="../../../assets/logo.svg" alt="Your Company" /> -->
+                            <p class="text-lg font-medium">JokerCRM</p>
                         </div>
-                        <nav class="mt-5 flex-1" aria-label="Sidebar">
+                        <nav class="mt-2 flex-1 space-y-3" aria-label="Sidebar">
                             <div class="space-y-1 px-2">
                                 <router-link v-for="item in navigation" :key="item.name" :to="item.href"
+                                    :class="[item.current ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                                    <Icon :icon="item.icon" class="w-4 h-4 mr-2" />
+                                    {{ item.name }}
+                                </router-link>
+                            </div>
+                            <hr v-if="user.role === 'Admin'" class="border-gray-300">
+                            <div v-if="user.role === 'Admin'" class="space-y-1 px-2">
+                                <p class="text-xs ml-3 text-gray-600">Team managing</p>
+                                <router-link v-for="item in navigationCEO" :key="item.name" :to="item.href"
                                     :class="[item.current ? 'bg-gray-200 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                                     <Icon :icon="item.icon" class="w-4 h-4 mr-2" />
                                     {{ item.name }}
@@ -97,7 +108,8 @@
                                         src="https://source.unsplash.com/featured/300x201" alt="" />
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{ user.name
+                                    <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{
+                                        user.name
                                     }}</p>
                                     <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile
                                     </p>
@@ -144,7 +156,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, TransitionRoot, TransitionChild, Dialog, DialogPanel } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { Icon } from '@iconify/vue';
 export default defineComponent({
@@ -159,6 +171,10 @@ export default defineComponent({
         Bars3Icon,
         BellIcon,
         XMarkIcon,
+        TransitionRoot,
+        TransitionChild,
+        Dialog,
+        DialogPanel,
         Icon
     },
     data() {
@@ -166,16 +182,23 @@ export default defineComponent({
             navigation: [
                 { name: 'Dashboard', href: '/dashboard/overview', current: false, icon: 'mdi:home' },
                 { name: 'Clients', href: '/dashboard/clients', current: false, icon: 'mdi:account-group' },
-                { name: 'Contracts', href: '#', current: false, icon: 'mdi:account-credit-card' },
-                // { name: 'Calendar', href: '#', current: false, icon: 'mdi:calendar' },
+                { name: 'Emails', href: '/dashboard/emails', current: false, icon: 'mdi:email' },
+                { name: 'MyContracts', href: '/dashboard/mycontracts', current: false, icon: 'mdi:account-credit-card' },
+                { name: 'MyAppointments', href: '/dashboard/myappointments', current: false, icon: 'mdi:calendar' },
                 // { name: 'Reports', href: '#', current: false, icon: 'mdi:message-alert' },
-                { name: 'Emails', href: '#', current: false, icon: 'mdi:email' },
+            ],
+            navigationCEO: [
+                { name: 'Salesmens', href: '/dashboard/salesmans', current: false, icon: 'mdi:account-group' },
+                { name: 'Contracts', href: '/dashboard/contracts', current: false, icon: 'mdi:account-credit-card' },
+                { name: 'Appointments', href: '/dashboard/appointments', current: false, icon: 'mdi:calendar' },
+
             ],
             user: {
                 name: 'Daniel Buzon',
                 email: 'danielbuzon@example.com',
                 imageUrl:
                     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+                role: 'Admin' //salesman or admin
             },
             userNavigation: [
                 { name: 'Your Profile', href: '#' },
