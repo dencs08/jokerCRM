@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed">
+    <div class="fixed z-[999]">
         <div class="container mx-auto flex items-center justify-between min-h-[50px] h-[9vh] w-[100vw]">
             <div>
                 <router-link to="/start">
@@ -15,11 +15,15 @@
     </div>
 </template>
 <script lang="ts">
-import logo from '../../assets/logo.svg';
-
 import { defineComponent } from 'vue';
 
+import logo from '../../assets/logo.svg';
+
+import { Button } from '../../components'
 export default defineComponent({
+    components: {
+        Button
+    },
     data() {
         return {
             logo: logo,
