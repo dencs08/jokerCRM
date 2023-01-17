@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  plugins: [
+    // require('@tailwindcss/forms'),
+  ],
   corePlugins: {
     container: false
   },
@@ -15,5 +18,4 @@ module.exports = {
       },
     }
   },
-  plugins: [],
 }
