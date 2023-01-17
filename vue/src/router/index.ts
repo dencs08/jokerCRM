@@ -2,7 +2,21 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import { DefaultLayout, AdminLayout } from "../Layouts";
 
-import { Start, Dashboard, Login, Register, Overview, Clients } from "../views";
+import {
+    Start,
+    Dashboard,
+    Login,
+    Register,
+    Overview,
+    Clients,
+    Emails,
+    Salesmans,
+    Appointments,
+    MyAppointments,
+    Contracts,
+    MyContracts,
+    Client,
+} from "../views";
 
 const routes = [
     {
@@ -56,9 +70,45 @@ const routes = [
                         name: "Overview",
                     },
                     {
-                        path: "/dashboard/Clients",
+                        path: "/dashboard/clients",
                         component: Clients,
                         name: "Clients",
+                    },
+                    {
+                        path: "/dashboard/client/:id",
+                        component: Client,
+                        name: "Client",
+                        props: true,
+                    },
+                    {
+                        path: "/dashboard/contracts",
+                        component: Contracts,
+                        name: "Contracts",
+                    },
+                    {
+                        path: "/dashboard/appointments",
+                        component: Appointments,
+                        name: "Appointments",
+                    },
+                    {
+                        path: "/dashboard/emails",
+                        component: Emails,
+                        name: "Emails",
+                    },
+                    {
+                        path: "/dashboard/salesmans",
+                        component: Salesmans,
+                        name: "Salesmans",
+                    },
+                    {
+                        path: "/dashboard/mycontracts",
+                        component: MyContracts,
+                        name: "MyContracts",
+                    },
+                    {
+                        path: "/dashboard/myappointments",
+                        component: MyAppointments,
+                        name: "MyAppointments",
                     },
                 ],
             },
