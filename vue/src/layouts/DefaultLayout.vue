@@ -1,10 +1,14 @@
 <template>
     <Navbar />
-    <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-            <component :is="Component" />
-        </transition>
-    </router-view>
+    <section class="overflow-hidden relative">
+        <img class="opacity-[35%] absolute z-[-99] min-w-[150vw] blur-md" src="../assets/logo.svg" alt="" />
+
+        <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
+                <component :is="Component" />
+            </transition>
+        </router-view>
+    </section>
 </template>
 
 <script lang="ts">
