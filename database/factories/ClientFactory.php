@@ -15,8 +15,10 @@ class ClientFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->bothify('###-###-###'),
             'nip' => fake()->randomNumber(6),
-            'city' => fake()->word(),
+            'city' => fake()->city(),
             'zipcode' => fake()->bothify('##-###'),
+            // 'contact_person_id' => fake()->numberBetween($min = 1, $max = 100),
+            // 'contract_id' => fake()->numberBetween($min = 1, $max = 100),
         ];
     }
 }
