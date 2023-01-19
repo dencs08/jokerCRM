@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('date');
             $table->string('location');
+            $table->string('time');
+            $table->unsignedBigInteger('client_id')->nullable();
+            $table->unsignedBigInteger('system_user_id')->nullable();
             // $table->foreignId('client_id')->nullable()->constrained();
             // $table->foreignId('system_user_id')->nullable()->constrained();
         });

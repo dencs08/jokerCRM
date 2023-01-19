@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('clients', function (Blueprint $table) {
@@ -22,16 +17,11 @@ return new class extends Migration
             $table->string('nip');
             $table->string('city');
             $table->string('zipcode');
-            // $table->foreignId('contact_person_id')->nullable()->constrained();
-            // $table->foreignId('contract_id')->nullable()->constrained();
+            // $table->unsignedBigInteger('contact_person_id')->nullable();
+            // $table->unsignedBigInteger('contract_id')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('clients');
