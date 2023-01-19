@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
+use App\Models\SystemUser;
 use Illuminate\Http\Request;
 
 class ContractsController extends Controller
@@ -45,7 +47,15 @@ class ContractsController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = SystemUser::findOrFail($id);
+
+        if ($user->role === 'Admin') {
+            $contracts = Contract::with(['client'])->get();
+        } elseif ($user->role === 'User') {
+            $contracts = Contract::with(['client'])->where('system_user_id', $id)->get();
+        }
+
+        return $contracts;
     }
 
     /**
