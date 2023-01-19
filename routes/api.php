@@ -16,7 +16,14 @@ Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/client/{id}', [ClientsController::class, 'show']);
 Route::delete('/client/{id}', [ClientsController::class, 'destroy']);
+Route::post('/client/add', [ClientsController::class, 'store']);
+
 Route::get('/clients', [ClientsController::class, 'index']);
+
+Route::get('/appointments/{id}', [AppointmentsController::class, 'show']);
+
+Route::get('/contracts/{id}', [ContractsController::class, 'show']);
 Route::get('/contracts', [ContractsController::class, 'index']);
+
 Route::get('/appointments', [AppointmentsController::class, 'index']);
 Route::get('/salesmen', [SystemUsersController::class, 'index']);
