@@ -1,78 +1,85 @@
 <template>
     <div>
-        <p class="mb-3 font-medium text-lg">Salesmans</p>
-        <div class="overflow-hidden bg-white shadow sm:rounded-md">
-            <ul role="list" class="divide-y divide-gray-200">
-                <li v-for="position in positions" :key="position.id">
-                    <a href="#" class="block hover:bg-gray-50">
+        <p class="mb-3 font-medium text-lg">Salesmen</p>
+        <div class="bg-white">
+            <div class="grid grid-cols-2 gap-5">
+                <div v-for="salesman in salesmen" :key="salesman.id" class="">
+                    <router-link :to="{ name: 'Salesman', params: { id: salesman.id.toString() } }"
+                        class="block hover:bg-gray-50 shadow sm:rounded-md p-2 border border-gray-100">
                         <div class="px-4 py-4 sm:px-6">
                             <div class="flex items-center justify-between">
-                                <p class="truncate text-sm font-medium text-indigo-600">{{ position.title }}</p>
+                                <p class="truncate text-sm font-medium text-indigo-600">
+                                    {{ salesman.name }}
+                                    <span class="text-gray-500 ml-3 text-xs">{{ salesman.role }}</span>
+                                </p>
                                 <div class="ml-2 flex flex-shrink-0">
                                     <p
                                         class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                                        {{ position.type }}</p>
+                                        {{ salesman.email }}
+                                    </p>
                                 </div>
                             </div>
                             <div class="mt-2 sm:flex sm:justify-between">
                                 <div class="sm:flex">
-                                    <p class="flex items-center text-sm text-gray-500">
-                                        {{ position.department }}
+                                    <p class="text-sm text-gray-500">
+                                        <span class="flex items-center">
+                                            <Icon icon="majesticons:location-marker" class="mr-1" />
+                                            {{ salesman.department }}
+                                        </span>
                                     </p>
-                                    <p class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
-                                        {{ position.location }}
-                                    </p>
+
                                 </div>
-                                <div class="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                <div class="mt-2 flex flex-col text-sm items-end text-gray-500 sm:mt-0">
                                     <p>
-                                        Closing on
+                                        Commision:
                                         {{ ' ' }}
-                                        <time :datetime="position.closeDate">{{ position.closeDateFull }}</time>
+                                        <span class="font-bold">{{ salesman.percentage }}%</span>
+                                    </p>
+                                    <p>
+                                        Earned:
+                                        {{ ' ' }}
+                                        <span class="font-bold">${{ salesman.earned }}</span>
+                                    </p>
+                                    <p>
+                                        Net Amount:
+                                        {{ ' ' }}
+                                        <span class="font-bold">${{ salesman.netamount }}</span>
                                     </p>
                                 </div>
                             </div>
                         </div>
-                    </a>
-                </li>
-            </ul>
+                    </router-link>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script lang="ts">
-
+import { getSalesmen } from '../../ts/axios';
+import { Icon } from '@iconify/vue'
 export default {
+    components: {
+        Icon
+    },
     data() {
         return {
-            positions: [
+            salesmen: [
                 {
                     id: 1,
-                    title: 'Sprzedawca 1',
-                    type: 'Full-time',
-                    location: 'Remote',
-                    department: 'Engineering',
-                    closeDate: '2020-01-07',
-                    closeDateFull: 'January 7, 2020',
-                },
-                {
-                    id: 2,
-                    title: 'Sprzedawca 2',
-                    type: 'Full-time',
-                    location: 'Remote',
-                    department: 'Engineering',
-                    closeDate: '2020-01-07',
-                    closeDateFull: 'January 7, 2020',
-                },
-                {
-                    id: 3,
-                    title: 'Sprzedawca 3',
-                    type: 'Full-time',
-                    location: 'Remote',
-                    department: 'Design',
-                    closeDate: '2020-01-14',
-                    closeDateFull: 'January 14, 2020',
+                    name: 'Sprzedawca 1',
+                    email: 'example@example.pl',
+                    role: 'User',
+                    department: 'Zielona gora',
+                    percentage: 10,
+                    earned: '$1000',
+                    netamount: '$100000'
                 },
             ]
         }
+    },
+
+    async mounted() {
+        this.salesmen = await getSalesmen();
     }
 }
 </script>
