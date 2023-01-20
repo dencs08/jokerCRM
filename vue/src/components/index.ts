@@ -8,3 +8,4 @@ export { default as Modal } from "./Modal.vue";
 
 export { default as ClientsTable } from "./ClientsTable.vue";
 export { default as ContractsTable } from "./ContractsTable.vue";
+export { default as AppointmentsTable } from "./AppointmentsTable.vue";
