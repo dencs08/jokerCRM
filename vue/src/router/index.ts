@@ -11,6 +11,7 @@ import {
     Clients,
     Emails,
     Salesmans,
+    Salesman,
     Appointments,
     MyAppointments,
     Contracts,
@@ -99,6 +100,12 @@ const routes = [
                         path: "/dashboard/salesmans",
                         component: Salesmans,
                         name: "Salesmans",
+                    },
+                    {
+                        path: "/dashboard/salesman/:id",
+                        component: Salesman,
+                        name: "Salesman",
+                        props: true,
                     },
                     {
                         path: "/dashboard/mycontracts",
