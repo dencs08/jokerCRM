@@ -13,4 +13,8 @@ class Appointment extends Model
     {
         return $this->belongsTo(Client::class);
     }
+    public function system_user()
+    {
+        return $this->belongsTo(SystemUser::class);
+    }
 }

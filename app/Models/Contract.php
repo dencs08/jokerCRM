@@ -12,5 +12,9 @@ class Contract extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }    
+    public function system_user()
+    {
+        return $this->belongsTo(SystemUser::class, 'system_user_id', 'id');
     }
 }
