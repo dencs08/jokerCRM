@@ -28,9 +28,9 @@ class AppointmentsController extends Controller
         $user = SystemUser::findOrFail($id);
 
         if ($user->role === 'Admin') {
-            $appointments = Appointment::with(['client'])->get();
+            $appointments = Appointment::with(['client', 'system_user'])->get();
         } elseif ($user->role === 'User') {
-            $appointments = Appointment::with(['client'])->where('system_user_id', $id)->get();
+            $appointments = Appointment::with(['client', 'system_user'])->where('system_user_id', $id)->get();
         }
 
         return $appointments;
@@ -48,6 +48,8 @@ class AppointmentsController extends Controller
 
     public function destroy($id)
     {
-        //
+        $appointment = Appointment::findOrFail($id);
+        $appointment->delete();
+        return;
     }
 }

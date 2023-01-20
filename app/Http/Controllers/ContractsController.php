@@ -50,9 +50,9 @@ class ContractsController extends Controller
         $user = SystemUser::findOrFail($id);
 
         if ($user->role === 'Admin') {
-            $contracts = Contract::with(['client'])->get();
+            $contracts = Contract::with(['client','system_user'])->get();
         } elseif ($user->role === 'User') {
-            $contracts = Contract::with(['client'])->where('system_user_id', $id)->get();
+            $contracts = Contract::with(['client','system_user'])->where('system_user_id', $id)->get();
         }
 
         return $contracts;
@@ -89,6 +89,8 @@ class ContractsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contract = Contract::findOrFail($id);
+        $contract->delete();
+        return;
     }
 }
