@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('role');
+            $table->string('department');
+            $table->string('percentage');
             $table->rememberToken();
         });
     }
