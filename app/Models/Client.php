@@ -12,6 +12,10 @@ class Client extends Model
         'name', 'ceoname', 'email', 'phone', 'nip', 'city', 'zipcode',
     ];
     public $timestamps = false;
+    public function salesmen()
+    {
+        return $this->belongsToMany(SystemUser::class);
+    }
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
