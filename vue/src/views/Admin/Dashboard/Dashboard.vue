@@ -137,7 +137,7 @@
                     </div>
                 </div>
             </div>
-            <div class="relative z-0 flex flex-1 overflow-hidden">
+            <div class="relative z-0 flex flex-1 overflow-x-hidden">
                 <main class="w-full">
                     <div class="mx-auto py-6 sm:px-6 lg:px-8">
                         <!-- Replace with your content -->
@@ -182,23 +182,24 @@ export default defineComponent({
             navigation: [
                 { name: 'Dashboard', href: '/dashboard/overview', current: false, icon: 'mdi:home' },
                 { name: 'Clients', href: '/dashboard/clients', current: false, icon: 'mdi:account-group' },
-                { name: 'Emails', href: '/dashboard/emails', current: false, icon: 'mdi:email' },
+                // { name: 'Emails', href: '/dashboard/emails', current: false, icon: 'mdi:email' },
                 { name: 'MyContracts', href: '/dashboard/mycontracts', current: false, icon: 'mdi:account-credit-card' },
                 { name: 'MyAppointments', href: '/dashboard/myappointments', current: false, icon: 'mdi:calendar' },
                 // { name: 'Reports', href: '#', current: false, icon: 'mdi:message-alert' },
             ],
             navigationCEO: [
-                { name: 'Salesmens', href: '/dashboard/salesmans', current: false, icon: 'mdi:account-group' },
+                { name: 'Salesmen', href: '/dashboard/salesmans', current: false, icon: 'mdi:account-group' },
                 { name: 'Contracts', href: '/dashboard/contracts', current: false, icon: 'mdi:account-credit-card' },
                 { name: 'Appointments', href: '/dashboard/appointments', current: false, icon: 'mdi:calendar' },
 
             ],
             user: {
+                id: 1,
                 name: 'Daniel Buzon',
                 email: 'danielbuzon@example.com',
                 imageUrl:
                     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-                role: 'Admin' //salesman or admin
+                role: 'Admin' //user or admin
             },
             userNavigation: [
                 { name: 'Your Profile', href: '#' },
