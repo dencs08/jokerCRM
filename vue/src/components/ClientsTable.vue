@@ -13,9 +13,11 @@
                                     Email</th>
                                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Phone</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" v-if="!essential"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     NIP</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                <th scope="col" v-if="!essential"
+                                    class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     City</th>
                                 <th scope="col" class="relative py-3.5 pl-1 pr-1 sm:pr-0">
                                     <span class="sr-only">Actions</span>
@@ -25,13 +27,21 @@
                         <tbody class="divide-y divide-gray-200 bg-white">
                             <tr v-for="person in people" :key="person.email">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                    {{ person.name }}</td>
+
+                                    <router-link :to="{ name: 'Client', params: { id: person.id.toString() } }"
+                                        class="text-indigo-600 hover:text-indigo-900">
+                                        {{ person.name }}
+                                    </router-link>
+
+                                </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.email }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.phone }}
                                 </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.nip }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{
+                                <td v-if="!essential" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{
+                                    person.nip
+                                }}</td>
+                                <td v-if="!essential" class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{
                                     person.city
                                 }}</td>
                                 <td
@@ -45,7 +55,7 @@
                                         </span>
                                     </router-link>
 
-                                    <a href="#" @click="destroyClient(person.id)"
+                                    <a href="#" @click="destroyClientID(person.id)"
                                         class="text-indigo-600 hover:text-indigo-900">
                                         <span>
                                             <Icon icon="bxs:trash" class="inline" />
@@ -62,44 +72,38 @@
 </template>
 <script lang="ts">
 import { Icon } from '@iconify/vue';
-import { axiosClient } from '../ts/axios';
-
+import { getClients, destroyClient } from '../ts/axios';
+import { nextTick } from 'vue'
 export default {
+    props: {
+        essential: {
+            type: Boolean,
+            default: false
+        }
+    },
     components: {
         Icon
-    },
-    mounted() {
-        this.getClients()
     },
     data() {
         return {
             people: [] as { id: Number, name: string; phone: string; city: string; email: string; nip: string; }[],
+            user: {
+                id: 5,
+                role: 'Admin'
+            }
         }
     },
+    async mounted() {
+        this.people = await getClients(this.user.id);
+    },
     methods: {
-        async getClients() {
-            try {
-                const response = await axiosClient.get('/clients');
-                this.people = response.data;
-            } catch (error) {
-                console.log(error);
-            }
+        async destroyClientID(id: Number) {
+            await destroyClient(id);
+            await nextTick()
+            setTimeout(async () => {
+                this.people = await getClients(this.user.id);
+            }, 500);
         },
-
-        async destroyClient(id: Number) {
-            axiosClient.delete('/client/' + id)
-                .then(response => {
-                    // console.log(response.data);
-                    this.getClients();
-                })
-                .catch(error => {
-                    console.log(error);
-                });
-        },
-
-        async addClient(id: Number) {
-
-        }
     },
 }
 </script>
