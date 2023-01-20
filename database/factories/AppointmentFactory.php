@@ -12,6 +12,7 @@ class AppointmentFactory extends Factory
             'date' => fake()->date(),
             'location' => fake()->city(),
             'time' => fake()->date('H:i:s', rand(1,54000)),
+            'status' => fake()->randomElement(['Confirmed', 'Unconfirmed', 'Completed', 'Canceled']),
             'client_id' => fake()->numberBetween($min = 1, $max = 10),
             'system_user_id' => fake()->numberBetween($min = 1, $max = 10),
         ];

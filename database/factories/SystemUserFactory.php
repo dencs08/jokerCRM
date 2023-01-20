@@ -14,6 +14,8 @@ class SystemUserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => 'test', // password
             'role' => fake()->randomElement(['Admin', 'User']),
+            'department' => fake()->city(),
+            'percentage' => fake()->numberBetween($min = 5, $max = 15),
             'remember_token' => Str::random(10),
         ];
     }
