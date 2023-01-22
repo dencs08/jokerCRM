@@ -20,9 +20,10 @@ axiosClient.interceptors.request.use((config) => {
     return config;
 });
 
-export async function getClients(id: any): Promise<any> {
+export async function getClients(): Promise<any> {
     try {
-        const response = await axiosClient.get("/clients/" + id);
+        const response = await axiosClient.get("/clients");
+        console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -127,5 +128,62 @@ export async function destroyContract(id: Number): Promise<any> {
         .catch((error) => {
             console.log(error);
             return error;
+        });
+}
+
+export async function infoDestroy(id: Number): Promise<any> {
+    axiosClient
+        .delete("/info/" + id)
+        .then(async (response) => {
+            // console.log(response.data);
+            return response;
+        })
+        .catch((error) => {
+            console.log(error);
+            return error;
+        });
+}
+
+export async function addContract(data: Object): Promise<any> {
+    axiosPost
+        .post("/contract/add", data)
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+export async function addAppointment(data: Object): Promise<any> {
+    axiosPost
+        .post("/appointment/add", data)
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+export async function addClientContact(data: Object): Promise<any> {
+    axiosPost
+        .post("/clientcontact/add", data)
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+export async function addInfo(data: Object): Promise<any> {
+    axiosPost
+        .post("/info/add", data)
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error);
         });
 }
