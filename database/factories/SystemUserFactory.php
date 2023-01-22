@@ -12,6 +12,7 @@ class SystemUserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->bothify('###-###-###'),
             'password' => 'test', // password
             'role' => fake()->randomElement(['Admin', 'User']),
             'department' => fake()->city(),
