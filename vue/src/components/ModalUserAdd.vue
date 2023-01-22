@@ -46,14 +46,13 @@
 </template>
 
 <script lang="ts">
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { Button, InputCustom } from './';
 import { Icon } from '@iconify/vue';
 import { addClient } from '../ts/axios';
 
 export default {
     components: {
-        Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, Button, Icon, InputCustom
+        Button, Icon, InputCustom
     },
     props: {
         coach: Object,
