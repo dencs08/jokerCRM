@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Contract extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'transactionID', 'commision', 'price', 'netamount', 'status', 'client_id', 'system_user_id',
+    ];
     public $timestamps = false;
     public function client()
     {
