@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ClientInfo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -10,7 +11,7 @@ use App\Models\SystemUser;
 use App\Models\Contract;
 use App\Models\Appointment;
 use App\Models\Email;
-use App\Models\ContactPerson;
+use App\Models\ClientContact;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,8 +37,12 @@ class DatabaseSeeder extends Seeder
         ->count(500)
         ->create();
 
-        // ContactPerson::factory()
-        // ->count(100)
-        // ->create();
+        ClientContact::factory()
+        ->count(30)
+        ->create();
+
+        ClientInfo::factory()
+        ->count(100)
+        ->create();
     }
 }
