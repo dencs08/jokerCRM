@@ -16,6 +16,14 @@ class Client extends Model
     {
         return $this->belongsToMany(SystemUser::class);
     }
+    public function client_contacts()
+    {
+        return $this->hasMany(ClientContact::class);
+    }
+    public function client_info()
+    {
+        return $this->hasMany(ClientInfo::class);
+    }
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
