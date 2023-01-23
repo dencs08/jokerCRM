@@ -10,8 +10,8 @@ class SystemUserTableSeeder extends Seeder
 {
     public function run()
     {
-        SystemUser::factory()
-        ->count(10)
-        ->create();
+        // SystemUser::factory()
+        // ->count(10)
+        // ->create();
     }
 }
