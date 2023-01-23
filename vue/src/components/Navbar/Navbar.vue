@@ -9,7 +9,7 @@
             <div class="space-x-4">
                 <router-link to="/start">Start</router-link>
                 <router-link to="/login">Login</router-link>
-                <router-link to="/register">Register</router-link>
+                <!-- <router-link to="/register">Register</router-link> -->
             </div>
         </div>
     </div>
