@@ -9,7 +9,7 @@
                                 <th scope="col"
                                     class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                     Client</th>
-                                <th v-if="user.role == 'Admin' && !essential" scope="col"
+                                <th v-if="!essential" scope="col"
                                     class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Salesman
                                 </th>
@@ -37,12 +37,11 @@
                                         {{ meeting.client.name }}
                                     </router-link>
                                 </td>
-                                <td v-if="user.role == 'Admin' && !essential"
+                                <td v-if="!essential"
                                     class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                                    <router-link
-                                        :to="{ name: 'Salesman', params: { id: meeting.system_user.id.toString() } }"
+                                    <router-link :to="{ name: 'Salesman', params: { id: meeting.user.id.toString() } }"
                                         class="text-indigo-600 hover:text-indigo-900">
-                                        {{ meeting.system_user.name }}
+                                        {{ meeting.user.name }}
                                     </router-link>
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ meeting.location }}
@@ -89,6 +88,7 @@
 import { Icon } from '@iconify/vue'
 import { getAppointments, getClient, getSalesman, destroyAppointment } from '../ts/axios'
 import { nextTick } from 'vue'
+import { getUser } from '../ts/axios'
 
 export default {
     components: {
@@ -124,7 +124,7 @@ export default {
                             id: 1,
                             name: ''
                         },
-                        system_user: {
+                        user: {
                             id: 1,
                             name: ''
                         }
@@ -143,7 +143,7 @@ export default {
                         id: 1,
                         name: ''
                     },
-                    system_user: {
+                    user: {
                         id: 1,
                         name: ''
                     }
@@ -153,6 +153,7 @@ export default {
     },
 
     async mounted() {
+        this.user = await getUser();
         this.getData();
     },
 
@@ -167,24 +168,30 @@ export default {
         async getData() {
             if (this.$route.name === "MyAppointments") {
                 this.appointments = await getAppointments(this.user.id);
+                console.log(this.appointments);
+
                 return;
             }
             if (this.$route.name === "Client") {
                 this.client = await getClient(this.id);
                 this.appointments = this.client.appointments;
+
+
                 return;
             }
             if (this.$route.name === "Salesman") {
                 this.client = await getSalesman(this.id);
                 this.appointments = this.client.appointments;
+                console.log(this.client);
+
                 return;
             }
 
             this.appointments = await getAppointments(this.user.id);
-            console.log(this.appointments);
+            // console.log(this.appointments);
 
-            if (this.essential) this.appointments.length = 10;
-        }
+            if (this.essential && this.appointments.length > 10) this.appointments.length = 10;
+        },
     }
 }
 </script>

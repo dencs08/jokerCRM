@@ -73,7 +73,7 @@
 
         <!-- Static sidebar for desktop -->
         <div class="hidden lg:flex lg:flex-shrink-0">
-            <div class="flex w-38 flex-col">
+            <div class="flex w-38 max-w-[200px] flex-col">
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-gray-100">
                     <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
@@ -107,11 +107,13 @@
                                     <img class="inline-block h-9 w-9 rounded-full"
                                         src="https://source.unsplash.com/featured/300x201" alt="" />
                                 </div>
-                                <div class="ml-3">
+                                <div class="ml-3 truncate">
                                     <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900">{{
                                         user.name
                                     }}</p>
-                                    <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">View profile
+                                    <p @click="logout"
+                                        class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
+                                        Logout
                                     </p>
                                 </div>
                             </div>
@@ -159,6 +161,8 @@ import { defineComponent } from 'vue';
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems, TransitionRoot, TransitionChild, Dialog, DialogPanel } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { Icon } from '@iconify/vue';
+
+import { axiosAuthenticator, getUser } from '../../../ts/axios';
 export default defineComponent({
     components: {
         Disclosure,
@@ -195,8 +199,8 @@ export default defineComponent({
             ],
             user: {
                 id: 1,
-                name: 'Daniel Buzon',
-                email: 'danielbuzon@example.com',
+                name: '-',
+                email: '-',
                 imageUrl:
                     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
                 role: 'Admin' //user or admin
@@ -207,6 +211,18 @@ export default defineComponent({
                 { name: 'Sign out', href: '#' },
             ],
             sidebarOpen: true,
+        }
+    },
+
+    async mounted() {
+        this.user = await getUser();
+    },
+
+    methods: {
+        logout() {
+            axiosAuthenticator.post('/api/logout').then(() => {
+                this.$router.push('/login')
+            })
         }
     }
 })

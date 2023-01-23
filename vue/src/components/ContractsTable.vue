@@ -9,7 +9,7 @@
                                 <th scope="col"
                                     class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
                                     Transaction ID</th>
-                                <th v-if="user.role == 'Admin' && !essential" scope="col"
+                                <th v-if="!essential" scope="col"
                                     class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">
                                     Salesman
                                 </th>
@@ -46,12 +46,11 @@
                                         contract.transactionID
                                     }}
                                 </td>
-                                <td v-if="user.role == 'Admin' && !essential"
+                                <td v-if="!essential"
                                     class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">
-                                    <router-link
-                                        :to="{ name: 'Salesman', params: { id: contract.system_user.id.toString() } }"
+                                    <router-link :to="{ name: 'Salesman', params: { id: contract.user.id.toString() } }"
                                         class="text-indigo-600 hover:text-indigo-900">
-                                        {{ contract.system_user.name }}
+                                        {{ contract.user.name }}
                                     </router-link>
                                 </td>
                                 <td class="whitespace-nowrap px-2 py-2 text-sm text-gray-900">
@@ -103,7 +102,7 @@
 import { getContracts, getClient, getSalesman, destroyContract } from '../ts/axios';
 import { Icon } from '@iconify/vue'
 import { nextTick } from 'vue'
-
+import { getUser } from '../ts/axios'
 export default {
     components: { Icon },
     props: {
@@ -133,7 +132,7 @@ export default {
                         id: 1,
                         name: ''
                     },
-                    system_user: {
+                    user: {
                         id: 1,
                         name: ''
                     }
@@ -151,7 +150,7 @@ export default {
                         id: 1,
                         name: ''
                     },
-                    system_user: {
+                    user: {
                         id: 1,
                         name: ''
                     }
@@ -161,6 +160,7 @@ export default {
     },
 
     async mounted() {
+        this.user = await getUser();
         this.getData()
     },
 
@@ -180,6 +180,9 @@ export default {
             if (this.$route.name === "Client") {
                 this.client = await getClient(this.id);
                 this.contracts = this.client.contracts;
+
+                console.log(this.client.contracts);
+
                 return;
             }
             if (this.$route.name === "Salesman") {
@@ -189,7 +192,7 @@ export default {
             }
 
             this.contracts = await getContracts(this.user.id);
-            if (this.essential) this.contracts.length = 10;
+            if (this.essential && this.contracts.length > 10) this.contracts.length = 10;
         }
     }
 }

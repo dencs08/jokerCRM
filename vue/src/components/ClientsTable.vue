@@ -94,14 +94,14 @@ export default {
         }
     },
     async mounted() {
-        this.people = await getClients(this.user.id);
+        this.people = await getClients();
     },
     methods: {
         async destroyClientID(id: Number) {
             await destroyClient(id);
             await nextTick()
             setTimeout(async () => {
-                this.people = await getClients(this.user.id);
+                this.people = await getClients();
             }, 500);
         },
     },
