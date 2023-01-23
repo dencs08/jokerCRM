@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import { DefaultLayout, AdminLayout } from "../Layouts";
+import { axiosAuthenticator } from "../ts/axios";
 
 import {
     Start,
@@ -53,16 +54,16 @@ const routes = [
                 component: Dashboard,
                 name: "Dashboard",
                 redirect: "/dashboard/overview",
-                // beforeEnter: (to, from, next) => {
-                //     axiosAuthenticator
-                //         .get("/api/authenticated")
-                //         .then(() => {
-                //             next();
-                //         })
-                //         .catch(() => {
-                //             return next({ name: "Login" });
-                //         });
-                // },
+                beforeEnter: (to: any, from: any, next: any) => {
+                    axiosAuthenticator
+                        .get("/api/authenticated")
+                        .then(() => {
+                            next();
+                        })
+                        .catch(() => {
+                            return next({ name: "Login" });
+                        });
+                },
 
                 children: [
                     {
