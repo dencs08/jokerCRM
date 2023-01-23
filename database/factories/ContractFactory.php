@@ -18,7 +18,9 @@ class ContractFactory extends Factory
             'netamount' => fake()->numberBetween($min = 1500, $max = 6000),
             'status' => fake()->randomElement(['Completed', 'Pending', 'Canceled']),
             'client_id' => fake()->numberBetween($min = 1, $max = 10),
-            'system_user_id' => fake()->numberBetween($min = 1, $max = 10),
+            'user_id' => fake()->numberBetween($min = 1, $max = 10),
+            'created_at' => fake()->dateTimeThisYear('+11 months'),
+            'updated_at' => fake()->dateTimeThisYear('+11 months'),
         ];
     }
 }

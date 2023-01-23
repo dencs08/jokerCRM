@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('message');
             $table->string('subject');
             $table->unsignedBigInteger('client_id')->nullable();
-            $table->unsignedBigInteger('system_user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
         });
     }
 

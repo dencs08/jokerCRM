@@ -3,22 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
-use App\Models\SystemUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Client;
 
 class ClientsController extends Controller
 {
-    public function index($id)
+    public function index()
     {
-        $user = SystemUser::findOrFail($id);
-
-        if ($user->role === 'Admin') {
-            $clients = Client::with(['appointments', 'contracts','emails'])->get();
-        } elseif ($user->role === 'User') {
-            $clients = Client::with(['appointments', 'contracts','emails'])->where('system_user_id', $id)->get();
-        }
-        
+        $clients = Client::with(['appointments', 'contracts', 'emails'])->get();
         return $clients;
     }
 
@@ -52,7 +45,7 @@ class ClientsController extends Controller
 
     public function show($id)
     {
-        $client = Client::with(['appointments.client','appointments.system_user', 'contracts.system_user','contracts.client','emails'])->find($id);
+        $client = Client::with(['appointments.client','appointments.user', 'contracts.user','contracts.client','emails', 'client_contacts', 'client_info'])->find($id);
         return $client;
     }
 

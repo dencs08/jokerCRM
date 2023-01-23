@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientContact;
 use Illuminate\Http\Request;
 
 class ClientContactController extends Controller
@@ -34,7 +35,19 @@ class ClientContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'client' => 'required',
+        ]);
+
+        $clientcontact = ClientContact::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'phone' => $request['phone'],
+            'client_id' => $request['client'],
+        ]);
     }
 
     /**

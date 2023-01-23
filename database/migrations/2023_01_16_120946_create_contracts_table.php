@@ -21,9 +21,8 @@ return new class extends Migration
             $table->decimal('netamount');
             $table->string('status');
             $table->unsignedBigInteger('client_id')->nullable();
-            $table->unsignedBigInteger('system_user_id')->nullable();
-            // $table->foreignId('client_id')->references('id')->on('clients');
-            // $table->foreignId('system_user_id')->references('id')->on('system_user');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->timestamps();
         });
     }
 

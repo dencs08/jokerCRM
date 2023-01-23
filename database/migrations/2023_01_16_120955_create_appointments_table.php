@@ -20,9 +20,7 @@ return new class extends Migration
             $table->string('time');
             $table->string('status');
             $table->unsignedBigInteger('client_id')->nullable();
-            $table->unsignedBigInteger('system_user_id')->nullable();
-            // $table->foreignId('client_id')->nullable()->constrained();
-            // $table->foreignId('system_user_id')->nullable()->constrained();
+            $table->unsignedBigInteger('user_id')->nullable();
         });
     }
 

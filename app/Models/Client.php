@@ -14,7 +14,7 @@ class Client extends Model
     public $timestamps = false;
     public function salesmen()
     {
-        return $this->belongsToMany(SystemUser::class);
+        return $this->belongsToMany(User::class);
     }
     public function client_contacts()
     {

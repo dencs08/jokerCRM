@@ -20,7 +20,7 @@ class EmailFactory extends Factory
             'message' => fake()->text(254),
             'subject' => fake()->name(),
             'client_id' => fake()->numberBetween($min = 1, $max = 10),
-            'system_user_id' => fake()->numberBetween($min = 1, $max = 10),
+            'user_id' => fake()->numberBetween($min = 1, $max = 10),
         ];
     }
 }

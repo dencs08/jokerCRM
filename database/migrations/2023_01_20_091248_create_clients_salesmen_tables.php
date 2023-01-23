@@ -16,9 +16,7 @@ return new class extends Migration
         Schema::create('clients_salesmen_tables', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('client_id');
-            $table->unsignedBigInteger('salesman_id');
-            // $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-            // $table->foreign('salesman_id')->references('id')->on('salesmen')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
         });
     }
 

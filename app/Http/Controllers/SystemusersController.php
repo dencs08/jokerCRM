@@ -37,6 +37,7 @@ class SystemusersController extends Controller
     public function show($id)
     {
         $system_user = SystemUser::with(['appointments.client', 'appointments.system_user', 'contracts.client', 'contracts.system_user','emails'])->find($id);
+
         return $system_user;
     }
 
