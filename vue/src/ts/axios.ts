@@ -23,7 +23,7 @@ axiosClient.interceptors.request.use((config) => {
 export async function getClients(): Promise<any> {
     try {
         const response = await axiosClient.get("/clients");
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (error) {
         console.log(error);
@@ -58,7 +58,7 @@ export async function addClient(data: Object): Promise<any> {
     axiosPost
         .post("/client/add", data)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
@@ -148,7 +148,7 @@ export async function addContract(data: Object): Promise<any> {
     axiosPost
         .post("/contract/add", data)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
@@ -159,7 +159,7 @@ export async function addAppointment(data: Object): Promise<any> {
     axiosPost
         .post("/appointment/add", data)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
@@ -170,7 +170,7 @@ export async function addClientContact(data: Object): Promise<any> {
     axiosPost
         .post("/clientcontact/add", data)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
@@ -181,9 +181,19 @@ export async function addInfo(data: Object): Promise<any> {
     axiosPost
         .post("/info/add", data)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
         });
+}
+
+export async function getUser() {
+    try {
+        const response = await axiosAuthenticator.get("/api/user");
+        // console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
 }
