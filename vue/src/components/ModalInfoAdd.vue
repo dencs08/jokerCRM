@@ -27,7 +27,7 @@
 </template>
 <script lang="ts">
 import { Button, InputCustom, ListBox } from './';
-import { getClients } from '../ts/axios'
+import { getClients, addInfo } from '../ts/axios'
 
 export default {
     components: {
@@ -53,14 +53,13 @@ export default {
     methods: {
         async submitForm() {
             const info = { title: this.title, info: this.info, client: this.client };
-            console.log(info);
 
-            // await addClient(client);
-            // this.$emit('toggleModal');
+            if (this.$route.name === "Client") {
+                info.client = this.$route.params.id as string;
+            }
 
-            // setTimeout(() => {
-            // this.$router.go(0);
-            // }, 500);
+            await addInfo(info);
+            this.$emit('toggleModal');
         }
     }
 }

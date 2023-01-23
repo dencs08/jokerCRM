@@ -17,7 +17,14 @@
                             class="relative transform rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-6xl divide-y">
 
                             <ModalUserAdd @toggleModal="toggleModal" v-if="currentContent === 'userAdd'" />
-                            <ModalUserAdd @toggleModal="toggleModal" v-if="currentContent === 'danger'" />
+                            <ModalContractAdd @toggleModal="toggleModal" v-if="currentContent === 'contractAdd'" />
+                            <ModalContactPersonAdd @toggleModal="toggleModal"
+                                v-if="currentContent === 'contactPersonAdd'" />
+                            <ModalAppointmentAdd @toggleModal="toggleModal"
+                                v-if="currentContent === 'appointmentAdd'" />
+                            <ModalInfoAdd @toggleModal="toggleModal" v-if="currentContent === 'infoAdd'" />
+                            <ModalClientDisplay @toggleModal="toggleModal"
+                                v-if="currentContent === 'clientInfoDisplay'" />
 
                         </DialogPanel>
                     </TransitionChild>
@@ -28,12 +35,12 @@
 </template>
 <script lang="ts">
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
-import { Button, ModalUserAdd, ModalDanger } from './';
+import { Button, ModalUserAdd, ModalDanger, ModalClientDisplay, ModalAppointmentAdd, ModalContactPersonAdd, ModalContractAdd, ModalInfoAdd } from './';
 import { Icon } from '@iconify/vue';
 
 export default {
     components: {
-        Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, Button, Icon, ModalUserAdd, ModalDanger
+        Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot, Button, Icon, ModalUserAdd, ModalDanger, ModalClientDisplay, ModalAppointmentAdd, ModalContactPersonAdd, ModalContractAdd, ModalInfoAdd
     },
 
     data() {
@@ -50,8 +57,28 @@ export default {
             this.currentContent = 'userAdd';
             this.toggleModal();
         },
+        showContractAdd() {
+            this.currentContent = 'contractAdd';
+            this.toggleModal();
+        },
+        showContactPersonAdd() {
+            this.currentContent = 'contactPersonAdd';
+            this.toggleModal();
+        },
+        showAppointmentAdd() {
+            this.currentContent = 'appointmentAdd';
+            this.toggleModal();
+        },
+        showInfoAdd() {
+            this.currentContent = 'infoAdd';
+            this.toggleModal();
+        },
         danger() {
             this.currentContent = 'danger';
+            this.toggleModal();
+        },
+        showClientInfo() {
+            this.currentContent = 'clientInfoDisplay';
             this.toggleModal();
         },
     },

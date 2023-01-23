@@ -11,6 +11,8 @@
                     <div class="grid grid-cols-2 [&>*]:mr-6 [&>*]:my-2">
                         <InputCustom v-model="date" label="Date" type="date" name="date" placeholder="2022-12-12"
                             :required="true" />
+                        <InputCustom v-model="time" label="Time" type="time" name="time" placeholder="00:00"
+                            :required="true" />
                         <InputCustom v-model="location" label="Location" type="location" name="location"
                             placeholder="Zielona Góra" :required="true" />
                         <ListBox v-model="status" title="Status"
@@ -30,7 +32,7 @@
 </template>
 <script lang="ts">
 import { Button, InputCustom, ListBox } from './';
-import { getClients } from '../ts/axios'
+import { getClients, addAppointment } from '../ts/axios'
 export default {
     components: {
         Button, InputCustom, ListBox
@@ -38,6 +40,7 @@ export default {
     data() {
         return {
             date: '',
+            time: '',
             location: '',
             status: '',
             client: '',
@@ -59,15 +62,18 @@ export default {
 
     methods: {
         async submitForm() {
-            const appointment = { date: this.date, location: this.location, status: this.status, client: this.client, user: this.user.id };
-            console.log(appointment);
+            const appointment = { date: this.date, time: this.time, location: this.location, status: this.status, client: this.client, user: this.user.id };
 
-            // await addClient(client);
-            // this.$emit('toggleModal');
+            if (this.$route.name === "Client") {
+                appointment.client = this.$route.params.id as string;
+            }
 
-            // setTimeout(() => {
-            // this.$router.go(0);
-            // }, 500);
+            await addAppointment(appointment);
+            this.$emit('toggleModal');
+
+            setTimeout(() => {
+                this.$router.go(0);
+            }, 500);
         }
     }
 }

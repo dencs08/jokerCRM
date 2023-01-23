@@ -30,6 +30,7 @@
 </template>
 <script lang="ts">
 import { Button, InputCustom } from './';
+import { addClientContact } from '../ts/axios'
 
 export default {
     components: {
@@ -48,18 +49,20 @@ export default {
         }
     },
 
-
     methods: {
         async submitForm() {
-            const person = { name: this.name, email: this.email, phone: this.phone, user: this.user.id };
-            console.log(person);
+            const contact = { name: this.name, email: this.email, phone: this.phone, client: '' };
 
-            // await addClient(client);
-            // this.$emit('toggleModal');
+            if (this.$route.name === "Client") {
+                contact.client = this.$route.params.id as string;
+            }
 
-            // setTimeout(() => {
-            // this.$router.go(0);
-            // }, 500);
+            await addClientContact(contact);
+            this.$emit('toggleModal');
+
+            setTimeout(() => {
+                this.$router.go(0);
+            }, 500);
         }
     }
 }
