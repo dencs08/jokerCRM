@@ -5,12 +5,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SystemUsersController;
 use App\Http\Controllers\ClientInfoController;
 use App\Http\Controllers\ClientContactController;
+use App\Http\Controllers\LoginController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware('auth:sanctum')->get('/authenticated', function () {
+    return true;
 });
 
 Route::post('/login', [LoginController::class, 'login']);
@@ -21,8 +27,8 @@ Route::get('/client/{id}', [ClientsController::class, 'show']);
 Route::post('/client/add', [ClientsController::class, 'store']);
 Route::delete('/client/{id}', [ClientsController::class, 'destroy']);
 
-Route::get('/salesmen', [SystemusersController::class, 'index']);
-Route::get('/salesman/{id}', [SystemusersController::class, 'show']);
+Route::get('/salesmen', [UsersController::class, 'index']);
+Route::get('/salesman/{id}', [UsersController::class, 'show']);
 
 Route::get('/appointments', [AppointmentsController::class, 'index']);
 Route::get('/appointments/{id}', [AppointmentsController::class, 'show']);
