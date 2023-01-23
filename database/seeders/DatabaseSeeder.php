@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 
 use App\Models\Client;
 use App\Models\SystemUser;
+use App\Models\User;
 use App\Models\Contract;
 use App\Models\Appointment;
 use App\Models\Email;
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        SystemUser::factory()
+        User::factory()
         ->count(10)
         ->create();
 
