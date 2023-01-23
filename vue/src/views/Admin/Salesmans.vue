@@ -1,57 +1,51 @@
 <template>
     <div>
         <p class="mb-3 font-medium text-lg">Salesmen</p>
-        <div class="bg-white">
-            <div class="grid grid-cols-2 gap-5">
-                <div v-for="salesman in salesmen" :key="salesman.id" class="">
-                    <router-link :to="{ name: 'Salesman', params: { id: salesman.id.toString() } }"
-                        class="block hover:bg-gray-50 shadow sm:rounded-md p-2 border border-gray-100">
-                        <div class="px-4 py-4 sm:px-6">
-                            <div class="flex items-center justify-between">
-                                <p class="truncate text-sm font-medium text-indigo-600">
-                                    {{ salesman.name }}
-                                    <span class="text-gray-500 ml-3 text-xs">{{ salesman.role }}</span>
-                                </p>
-                                <div class="ml-2 flex flex-shrink-0">
-                                    <p
-                                        class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                                        {{ salesman.email }}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="mt-2 sm:flex sm:justify-between">
-                                <div class="sm:flex">
-                                    <p class="text-sm text-gray-500">
-                                        <span class="flex items-center">
-                                            <Icon icon="majesticons:location-marker" class="mr-1" />
-                                            {{ salesman.department }}
-                                        </span>
-                                    </p>
 
-                                </div>
-                                <div class="mt-2 flex flex-col text-sm items-end text-gray-500 sm:mt-0">
-                                    <p>
-                                        Commision:
-                                        {{ ' ' }}
-                                        <span class="font-bold">{{ salesman.percentage }}%</span>
-                                    </p>
-                                    <p>
-                                        Earned:
-                                        {{ ' ' }}
-                                        <span class="font-bold">${{ salesman.earned }}</span>
-                                    </p>
-                                    <p>
-                                        Net Amount:
-                                        {{ ' ' }}
-                                        <span class="font-bold">${{ salesman.netamount }}</span>
-                                    </p>
-                                </div>
+        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <li v-for="person in salesmen" :key="person.email"
+                class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
+                <router-link :to="{ name: 'Salesman', params: { id: person.id.toString() } }">
+                    <div class="flex w-full items-center justify-between space-x-6 p-6">
+                        <div class="flex-1 truncate">
+                            <div class="flex items-center space-x-3">
+                                <h3 class="truncate text-sm font-medium text-gray-900">{{ person.name }}</h3>
+                                <span
+                                    class="inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">{{
+                                        person.role
+                                    }}</span>
                             </div>
+                            <p class="mt-1 truncate text-sm text-gray-500">Commision: {{ person.percentage }}%</p>
+                            <p class="mt-1 truncate text-sm text-gray-500">Earned: ${{ person.earned }}</p>
+                            <p class="mt-1 truncate text-sm text-gray-500">Net Amount: ${{ person.netamount }}</p>
                         </div>
-                    </router-link>
+                        <img class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
+                            src="https://source.unsplash.com/random/100x100/?face" alt="" />
+                    </div>
+                </router-link>
+                <div>
+                    <div class="-mt-px flex divide-x divide-gray-200">
+                        <div class="flex w-0 flex-1">
+                            <a :href="`mailto:${person.email}`"
+                                class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center rounded-bl-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500">
+                                <EnvelopeIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                <Icon icon="ic:baseline-email" class="text-gray-500 h-5 w-5" />
+                                <span class="ml-2">Email</span>
+                            </a>
+                        </div>
+                        <div class="-ml-px flex w-0 flex-1">
+                            <a href="#"
+                                class="relative inline-flex w-0 flex-1 items-center justify-center rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500">
+                                <PhoneIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                <Icon icon="material-symbols:phone-enabled-sharp" class="text-gray-500 h-5 w-5" />
+                                <span class="ml-2">Call</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </li>
+        </ul>
+
     </div>
 </template>
 <script lang="ts">
